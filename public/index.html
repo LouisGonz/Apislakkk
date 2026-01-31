@@ -9,7 +9,11 @@
 </head>
 <body>
 
-  <aside class="sidebar">
+  <button class="mobile-menu-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <aside class="sidebar" id="sidebar">
     <div class="logo">
       <i class="fas fa-microchip"></i>
       <span>Eleven API</span>
@@ -17,14 +21,14 @@
     <nav>
       <ul>
         <li><a href="#" class="active"><i class="fas fa-home"></i> Início</a></li>
-        <li><a href="/frases?key=eleven" target="_blank"><i class="fas fa-quote-right"></i> Gerador de Frases</a></li>
-        <li><a href="/download?key=eleven&url=" target="_blank"><i class="fab fa-youtube"></i> YouTube Downloader</a></li>
-        <li><a href="/consulta/01001000?key=eleven" target="_blank"><i class="fas fa-map-marker-alt"></i> Consulta CEP</a></li>
+        <li><a href="javascript:void(0)" onclick="openModal('yt')"><i class="fab fa-youtube"></i> YouTube Tool</a></li>
+        <li><a href="javascript:void(0)" onclick="openModal('cep')"><i class="fas fa-map-marker-alt"></i> Consulta CEP</a></li>
+        <li><a href="javascript:void(0)" onclick="openModal('frases')"><i class="fas fa-quote-right"></i> Frases API</a></li>
         <li><a href="/uso?key=eleven" target="_blank"><i class="fas fa-chart-line"></i> Status de Uso</a></li>
       </ul>
     </nav>
     <div class="sidebar-footer">
-      <p>Logado como: <strong>Sr. Eleven</strong></p>
+      <p>Desenvolvido por <strong>Sr. Eleven</strong></p>
     </div>
   </aside>
 
@@ -34,7 +38,7 @@
     </header>
 
     <div class="dashboard-grid">
-      <div class="card key-card">
+      <div class="card">
         <div class="card-header">
           <i class="fas fa-key"></i>
           <h2>Sua API Key</h2>
@@ -44,20 +48,31 @@
           <button onclick="toggleKey()"><i class="fas fa-eye"></i></button>
         </div>
         <div class="key-actions">
-          <button class="btn-primary">Renovar Key</button>
+          <button class="btn-primary" onclick="alert('Funcionalidade de renovação em breve!')">Renovar Key</button>
           <button class="btn-secondary" onclick="copyKey()">Copiar</button>
         </div>
       </div>
 
-      <div class="card info-card">
-        <h2>Bem-vindo, Sr. Eleven</h2>
-        <p>Sua API está rodando perfeitamente no seu <strong>Linux Mint</strong>.</p>
-        <div class="status-badge">Sistema Online</div>
+      <div class="card">
+        <h2>Status do Servidor</h2>
+        <p>Plataforma: <strong>Linux Mint</strong></p>
+        <div class="status-badge">Online</div>
       </div>
     </div>
   </main>
 
+  <div id="apiModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
   <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
     function toggleKey() {
       const input = document.getElementById('apiKeyInput');
       input.type = input.type === 'password' ? 'text' : 'password';
@@ -67,9 +82,49 @@
       const input = document.getElementById('apiKeyInput');
       input.select();
       document.execCommand('copy');
-      alert('Key copiada para a área de transferência!');
+      alert('Key copiada!');
+    }
+
+    function openModal(type) {
+      const modal = document.getElementById('apiModal');
+      const body = document.getElementById('modalBody');
+      const key = document.getElementById('apiKeyInput').value;
+      
+      const docs = {
+        yt: `
+          <h2><i class="fab fa-youtube"></i> YouTube Downloader</h2>
+          <p>Extrai o link direto de vídeos para download.</p>
+          <strong>Endpoint:</strong>
+          <code>GET /download?key=${key}&url=URL_AQUI</code>
+          <strong>Exemplo de Comando (Bot):</strong>
+          <code>const res = await axios.get('.../download?key=${key}&url=' + url);<br>
+          message.reply('Link: ' + res.data.link);</code>
+        `,
+        cep: `
+          <h2><i class="fas fa-map-marker-alt"></i> Consulta CEP</h2>
+          <p>Busca endereços via API.</p>
+          <strong>Endpoint:</strong>
+          <code>GET /consulta/01001000?key=${key}</code>
+        `,
+        frases: `
+          <h2><i class="fas fa-quote-right"></i> Frases API</h2>
+          <p>Gera frases motivacionais aleatórias.</p>
+          <strong>Endpoint:</strong>
+          <code>GET /frases?key=${key}</code>
+        `
+      };
+
+      body.innerHTML = docs[type];
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById('apiModal').style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('apiModal')) closeModal();
     }
   </script>
 </body>
-        </html>
-  
+</html>
