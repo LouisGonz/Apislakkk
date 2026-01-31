@@ -1,0 +1,25 @@
+{
+  "name": "apieleven",
+  "version": "1.1.0",
+  "description": "API Multi-serviços do Sr. Eleven",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api",
+    "youtube",
+    "cep",
+    "frases"
+  ],
+  "author": "Sr. Eleven",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
