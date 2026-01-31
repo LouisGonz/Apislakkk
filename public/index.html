@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eleven API - Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <i class="fas fa-microchip"></i>
+      <span>Eleven API</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active"><i class="fas fa-home"></i> Início</a></li>
+        <li><a href="/frases?key=eleven" target="_blank"><i class="fas fa-quote-right"></i> Gerador de Frases</a></li>
+        <li><a href="/download?key=eleven&url=" target="_blank"><i class="fab fa-youtube"></i> YouTube Downloader</a></li>
+        <li><a href="/consulta/01001000?key=eleven" target="_blank"><i class="fas fa-map-marker-alt"></i> Consulta CEP</a></li>
+        <li><a href="/uso?key=eleven" target="_blank"><i class="fas fa-chart-line"></i> Status de Uso</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <p>Logado como: <strong>Sr. Eleven</strong></p>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header>
+      <h1>Painel de Controle</h1>
+    </header>
+
+    <div class="dashboard-grid">
+      <div class="card key-card">
+        <div class="card-header">
+          <i class="fas fa-key"></i>
+          <h2>Sua API Key</h2>
+        </div>
+        <div class="key-display">
+          <input type="password" value="eleven" id="apiKeyInput" readonly>
+          <button onclick="toggleKey()"><i class="fas fa-eye"></i></button>
+        </div>
+        <div class="key-actions">
+          <button class="btn-primary">Renovar Key</button>
+          <button class="btn-secondary" onclick="copyKey()">Copiar</button>
+        </div>
+      </div>
+
+      <div class="card info-card">
+        <h2>Bem-vindo, Sr. Eleven</h2>
+        <p>Sua API está rodando perfeitamente no seu <strong>Linux Mint</strong>.</p>
+        <div class="status-badge">Sistema Online</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleKey() {
+      const input = document.getElementById('apiKeyInput');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function copyKey() {
+      const input = document.getElementById('apiKeyInput');
+      input.select();
+      document.execCommand('copy');
+      alert('Key copiada para a área de transferência!');
+    }
+  </script>
+</body>
+        </html>
+  
